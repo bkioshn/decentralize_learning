@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import './App.css'
-import {AxGetListFiles} from './api.js'
+import {getListFiles, getLectureAssignmentStudent, getAssignmentTeacher} from './api.js'
 
 const but1 = 'Student'
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
 
 	const toggleRole = () => {
-		if (isStudent == 'Teacher') {
+		if (isStudent === 'Teacher') {
 			setIsStudent('Student')
 		} else {
 			setIsStudent('Teacher')
@@ -23,29 +23,34 @@ function App() {
 
   // Render component by roles
 	const renderTeacherStudent = () => {
-		if (isStudent == 'Teacher') {
+		if (isStudent === 'Teacher') {
 			return (
 				<div className="column4">
 					<h3>See student assignments</h3>
 					<div className="GetStudentAssign">
+					<form onSubmit={handleSubmit(onSubmitGetAssignmentTeacher)}>
 						<input {...register('SubjectID_GetStudent')} placeholder="Enter SubjectID" />
 						<br />
 						<input {...register('Topic_GetStudent')} placeholder="Enter topic name" />
 						<br />
 						<input type="submit" />
+					</form>	
 					</div>
 				</div>
+				
 			)
 		} else {
 			return (
 				<div className="column3">
 					<h3>See lectures & assignments</h3>
 					<div className="GetAssign">
+					<form onSubmit={handleSubmit(onSubmitGetLectureAssignmentStudent)}>
 						<input {...register('SubjectID_GetAssign')} placeholder="Enter SubjectID" />
 						<br />
 						<input {...register('MemID_GetAssign')} placeholder="Enter Your ID" />
 						<br />
 						<input type="submit" />
+					</form>
 					</div>
 				</div>
 			)
@@ -57,7 +62,8 @@ function App() {
     console.log('onclickUpload')
     if (data.uploadTopic !== '' && data.uploadSubjectID !== '' && data.uploadMemID !== '' && data.uploadFile !== '') {
       console.log(data)
-      // calling API
+	  // calling API
+	  
     } 
     
   }
@@ -67,11 +73,25 @@ function App() {
     console.log('onClickGetFiles')
     if (data.getFileSubjectID !== '' && data.getFileMemID !== '') {
       // Callling API getListFiles
-      let getData = await AxGetListFiles(data.getFileSubjectID, data.getFileMemID)
+      let getData = await getListFiles(data.getFileSubjectID, data.getFileMemID)
       console.log('get Data', getData)
     }
-
-
+	 }
+  const onSubmitGetLectureAssignmentStudent = async (data) => {
+	  console.log('onClickGetStudent')
+	  if (data.SubjectID_GetAssign !== '' && data.MemID_GetAssign !== ''){
+		  let getData = await getLectureAssignmentStudent(data.SubjectID_GetAssign
+			, data.MemID_GetAssign)
+			console.log('get Data', getData)
+	  }
+  }
+  const onSubmitGetAssignmentTeacher = async (data) => {
+	  console.log('OnclickGetTeacher')
+	  if (data.SubjectID_GetStudent !== '' && data.Topic_GetStudent !== ''){
+		  let getData = await getAssignmentTeacher(data.SubjectID_GetStudent, 
+		 data.Topic_GetStudent)
+			console.log('get Data', getData)
+	  }
   }
 	return (
 		<div className="App">
