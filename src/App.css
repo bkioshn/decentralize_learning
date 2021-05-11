@@ -64,46 +64,27 @@ h3 {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 0 5%;
 }
 
-.column1 {
-  float: left;
-  width: 25%;
+.column {
+  margin: 2% 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.inputCard {
   background-color: #e7d4b5;
   border-radius: 45px;
   margin-left: 5px;
   margin-right: 5px;
   box-shadow: 4px 2px #a0937d;
 }
-
-.column2 {
-  float: left;
-  width: 25%;
-  background-color: #e7d4b5;
-  border-radius: 45px;
-  margin-left: 5px;
-  margin-right: 5px;
-  box-shadow: 4px 2px #a0937d;
+.inputCard {
+  flex: 1;
 }
-
-.column3 {
-  float: left;
-  width: 25%;
-  background-color:#e7d4b5;
-  border-radius: 45px;
-  margin-left: 5px;
-  margin-right: 5px;
-  box-shadow: 4px 2px #a0937d;
-}
-
-.column4 {
-  float: left;
-  width: 25%;
-  background-color: #e7d4b5;
-  border-radius: 45px;
-  margin-left: 5px;
-  margin-right: 5px;
-  box-shadow: 4px 2px #a0937d;
+.display {
+  flex:2;
 }
 
 form {

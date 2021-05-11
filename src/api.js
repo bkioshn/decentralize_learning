@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react'
 const ax = axios.create({
 	baseURL: 'http://localhost:8080/',
 	headers: {
-		'Content-type': 'application/json',
+		'Content-Type': 'multipart/form-data',
 	},
 })
 
@@ -23,67 +23,73 @@ const getListFiles = (subjectID, memberID) => {
 		subjectID: subjectID,
 		memberID: memberID,
 	}
-	return ax.get('/getListFiles/', {params})
+	return ax
+		.get('/getListFiles/', { params })
 		.then((response) => {
 			console.log(response.data.args)
 			console.log('response: ', response)
 			console.log(JSON.stringify(response.data))
-			return(response.data)
+			return response.data
 		})
 		.catch((err) => {
 			console.error(err)
 		})
 }
-const getLectureAssignmentStudent = (subjectID  , memberID) => {
+const getLectureAssignmentStudent = (subjectID) => {
 	console.log(subjectID)
-	console.log(memberID)
 	let params = {
-		subjectID : subjectID,
-		
-		memberID : memberID
+		subjectID: subjectID,
+
 	}
-	return ax.get('/getLectureAssignmentStudent/', {params})
+	return ax
+		.get('/getLectureAssignmentStudent/', { params })
 		.then((response) => {
 			console.log(response.data.args)
 			console.log('response:', response)
 			console.log(JSON.stringify(response.data))
+			return response.data
 		})
 		.catch((err) => {
 			console.error(err)
 		})
 }
 const getAssignmentTeacher = (subjectID, topic) => {
-	console.log(subjectID)
-	console.log(topic)
 	let params = {
-		subjectID : subjectID,
-		
-		topic : topic
+		subjectID: subjectID,
+		topic: topic,
+		isAssignment: '1',
 	}
-	return ax.get('/getAssignmentTeacher/', {params})
+	return ax
+		.get('/getAssignmentTeacher/', { params })
 		.then((response) => {
 			console.log(response.data.args)
 			console.log('response:', response)
 			console.log(JSON.stringify(response.data))
+			return response.data
 		})
 		.catch((err) => {
 			console.error(err)
 		})
 }
- const Upload = () => {
- 	const [upload, setUpload] = useState({})
- 	axios
- 		.post('http://localhost:8080/upload', { topic: '', fileName: '', subjectID: '',memberID:''})
- 		.then((response) => {
- 			console.log('response:', response)
- 			setUpload(JSON.stringify(response.data))
- 			console.log(upload)
- 			return upload
- 		})
- 		.catch((err) => {
- 			console.error(err)
- 		})
- }
+const upload = (subjectID, topic, memberID, file, role, isAssignment, fileName) => {
+	const data = new FormData();
+		data.append('topic', topic);
+		data.append('file', file);
+		data.append('subjectID', subjectID);
+		data.append('fileName', fileName);
+		data.append('isAssignment', isAssignment);
+		data.append('memberID', memberID);
+		data.append('role', role);
+	return ax
+		.post('/upload', data)
+		.then((response) => {
+			console.log('response:', response.data)
+			return response.data
+		})
+		.catch((err) => {
+			console.error(err)
+		})
+}
 
 // const AxGetLectureAssignmentStudent = () => {
 // 	const [lectureAssignment, setLectureAssignment] = useState({})
@@ -129,4 +135,4 @@ const getAssignmentTeacher = (subjectID, topic) => {
 // 		})
 // }
 
-export { getListFiles, getLectureAssignmentStudent, getAssignmentTeacher, Upload }
+export { getListFiles, getLectureAssignmentStudent, getAssignmentTeacher, upload }
