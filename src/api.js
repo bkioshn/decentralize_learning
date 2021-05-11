@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react'
 // 	},
 // })
 const ax = axios.create({
-	baseURL: 'http://localhost:8080/',
+	baseURL: 'http://35.185.177.58:8080/',
 	headers: {
 		'Content-Type': 'multipart/form-data',
 	},
