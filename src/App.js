@@ -124,6 +124,8 @@ function App() {
 					<div>
 						<span>{studentAssignments[x].subjectID}</span>
 						<br />
+						<span>{studentAssignments[x].memberID}</span>
+						<br />
 						<a href={'https://ipfs.io/ipfs/' + studentAssignments[x].hash}>{'https://ipfs.io/ipfs/' + studentAssignments[x].hash}</a>
 					</div>
 				)

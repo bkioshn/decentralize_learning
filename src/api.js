@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useState, useEffect } from 'react'
 
 // const instance = axios.create({
 // 	baseURL: 'http://localhost:8084/getListFiles/?subjectID=CSS431&memberID=6122770215',
